@@ -195,14 +195,6 @@ A: Les DevTools fonctionnent normalement. Les modules apparaissent séparément 
 **Q: Puis-je modifier les fichiers originaux?**
 A: Oui, mais il est recommandé de travailler sur la version modulaire pour les nouvelles fonctionnalités.
 
-## 🎓 Prochaines étapes
-
-1. **Explorez** le code modulaire
-2. **Lisez** README_DEV.md
-3. **Testez** les deux versions
-4. **Choisissez** l'approche qui vous convient
-5. **Développez** de nouvelles fonctionnalités !
-
 ---
 
 **Questions?** Consultez les commentaires dans le code ou le README_DEV.md
