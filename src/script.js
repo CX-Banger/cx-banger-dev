@@ -136,9 +136,9 @@ function renderUpcoming() {
   const upcomingDiv = document.getElementById('upcoming');
   upcomingDiv.innerHTML = `
     <div class="featured-album">
-      <img src="https://github.com/CX-Banger/cx-muzik/blob/main/media/sorties/avenir.jpg?raw=true" class="featured-album-cover" alt="The King">
-      <div class="featured-album-title">The King</div>
-      <div class="featured-album-year">SYNAI ft. Elihem</div>
+      <img src="https://github.com/CX-Banger/cx-muzik/blob/main/media/sorties/avenir2.jpg?raw=true" class="featured-album-cover" alt="Je t'aime">
+      <div class="featured-album-title">"Je t'aime"</div>
+      <div class="featured-album-year">Synaï ft Sara - 28/10/2025</div>
     </div>
   `;
 }
