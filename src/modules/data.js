@@ -2,8 +2,7 @@
  * Data Module
  * Gère les données des artistes, albums et leur construction
  */
-
-import { GITHUB_BASE_URL, SUPABASE_STORAGE_URL } from './config.js';
+/* import { GITHUB_BASE_URL, SUPABASE_STORAGE_URL } from './config.js'; */
 
 const artistNames = ['NAN', 'Synaï', 'Elihem', 'Sara', 'Eilynn', 'Melohim', 'Tiim', 'Math'];
 const trackTitles = [
