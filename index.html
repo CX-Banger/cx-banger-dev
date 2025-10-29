@@ -1,12 +1,6 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <!--     
-    <script>
-     // Redirection immédiate vers la page de maintenance
-     window.location.replace("https://cx-banger.github.io/503-page/");
-    </script>
-  -->      
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
   <meta name="theme-color" content="#000000" />
@@ -96,10 +90,10 @@
 </svg></div>
             <div class="hero-meta">
               <strong>À la une</strong>
-              <h2 id="featuredTitle">The King</h2>
+              <h2 id="featuredTitle">Obsédé</h2>
               <div class="chips">
-                <span class="chip">Synaï</span>
-                <span class="chip">Elihem</span>
+                <span class="chip">Rap - Gospel</span>
+                <span class="chip">2025</span>
               </div>
             </div>
             <div class="hero-platforms">
@@ -175,6 +169,41 @@
         <section id="page-upcoming" class="page">
           <h2>🔥 Sorties & À la une</h2>
           <div id="upcoming" class="grid"></div>
+        </section>
+
+        <!-- Artist Page -->
+        <section id="page-artist" class="page">
+          <div class="artist-page-header">
+            <div class="artist-page-banner">
+              <div class="artist-page-cover">
+                <img id="artistPageImage" src="" alt="Artist">
+              </div>
+              <div class="artist-page-info">
+                <span class="artist-page-label">Artiste</span>
+                <h1 id="artistPageName" class="artist-page-title"></h1>
+                <div id="artistPageBio" class="artist-page-bio"></div>
+              </div>
+            </div>
+            <div class="artist-page-actions">
+              <button id="artistPlayBtn" class="artist-play-btn">
+                <i class="fas fa-play"></i>
+              </button>
+              <button class="artist-action-btn">
+                <i class="fas fa-ellipsis-h"></i>
+              </button>
+            </div>
+          </div>
+          <div class="artist-page-content">
+            <div class="artist-tracks-section">
+              <div class="tracks-table-header">
+                <div class="track-col-number">#</div>
+                <div class="track-col-title">Titre</div>
+                <div class="track-col-album">Album</div>
+                <div class="track-col-duration"><i class="far fa-clock"></i></div>
+              </div>
+              <div id="artistTracksList" class="tracks-table-body"></div>
+            </div>
+          </div>
         </section>
       </section>
     </main>
@@ -285,19 +314,10 @@
       </div>
     </div>
 
-    <!-- Artist modal -->
-    <div id="artistModal" class="modal" aria-hidden="true">
-      <div class="modal-inner">
-        <button class="modal-close" id="modalClose">✖</button>
-        <h3 id="modalName"></h3>
-        <p id="modalBio"></p>
-        <div id="modalTracks" class="modal-tracks"></div>
-      </div>
-    </div>
   </div>
 
   <!-- JS -->
-  <script src="src/script.js"></script>
+  <script type="module" src="src/script.js"></script>
   <script src="src/player.js"></script>
 </body>
 </html>
