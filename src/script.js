@@ -89,7 +89,7 @@ function renderFeatured() {
   featuredDiv.innerHTML = '';
 
   const featuredAlbums = [
-    { title: "Sans Effet", artist: "NAN", year: "NAN", cover: `${GITHUB_BASE_URL}/media/artiste1/cover21.jpg`, artistIndex: 1 },
+    { title: "Sans Effet", artist: "NAN", year: "NAN", cover: `${GITHUB_BASE_URL}/media/artiste1/cover21.jpg`, audio: 'https://hrzmagjjobctkfxayokt.supabase.co/storage/v1/object/public/sons/artiste1/son21.mp3' },
     { title: "The King ft Elihem", artist: "Synaï", year: "Synaï ft Elihem", cover: `${GITHUB_BASE_URL}/media/artiste2/cover12.jpg`, artistIndex: 1 },
     { title: "Evidemment", artist: "Elihem", year: "Elihem", cover: `${GITHUB_BASE_URL}/media/artiste3/cover5.jpg`, artistIndex: 2 },
     { title: "Je t aime ft Synaï", artist: "Sara", year: "Sara ft Synaï", cover: `${GITHUB_BASE_URL}/media/artiste4/cover5.jpg`, artistIndex: 3 },
