@@ -17,6 +17,7 @@
  */
 
 import { GITHUB_BASE_URL } from './modules/config.js';
+import { SUPABASE_STORAGE_URL } from './modules/config.js';
 import { artists, albums } from './modules/data.js';
 import { showPage, initNavigation } from './modules/navigation.js';
 import {
