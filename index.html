@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Muzikly - ConnexionBanger</title>
+  
+    <!-- Logo de l'onglet (favicon) -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/CX-Banger/cx-muzik/0c07a92d0298865c5d0b4c06eb6c27be1c2ac8db/assets/muzikly-logo-noir.svg" />
+
+  <!-- Font & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (desktop) -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-mark"><svg width="300" height="300" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Arrière-plan vert avec coins arrondis -->
+  <rect x="10" y="10" width="180" height="180" rx="40" ry="40" fill="#4CAF50"/>
+  
+  <!-- Ombre subtile -->
+  <rect x="12" y="12" width="180" height="180" rx="40" ry="40" fill="rgba(0,0,0,0.1)"/>
+  <rect x="10" y="10" width="180" height="180" rx="40" ry="40" fill="#4CAF50"/>
+  
+  <!-- Icône spirale centrée et redimensionnée -->
+  <g transform="translate(100, 100) scale(7)">
+    <g transform="translate(-12, -12)">
+      <path fill="none" d="M0 0h24v24H0z"/>
+      <path fill="white" d="M10.421 11.375c-.294 1.028.012 2.064.784 2.653 1.061.81 2.565.3 2.874-.995.08-.337.103-.722.027-1.056-.23-1.001-.52-1.988-.792-2.996-1.33.154-2.543 1.172-2.893 2.394zm5.548-.287c.273 1.012.285 2.017-.127 3-1.128 2.69-4.721 3.14-6.573.826-1.302-1.627-1.28-3.961.06-5.734.78-1.032 1.804-1.707 3.048-2.054l.379-.104c-.084-.415-.188-.816-.243-1.224-.176-1.317.512-2.503 1.744-3.04 1.226-.535 2.708-.216 3.53.76.406.479.395 1.08-.025 1.464-.412.377-.996.346-1.435-.09-.247-.246-.51-.44-.877-.436-.525.006-.987.418-.945.937.037.468.173.93.3 1.386.022.078.216.135.338.153 1.334.197 2.504.731 3.472 1.676 2.558 2.493 2.861 6.531.672 9.44-1.529 2.032-3.61 3.168-6.127 3.409-4.621.44-8.664-2.53-9.7-7.058C2.515 10.255 4.84 5.831 8.795 4.25c.586-.234 1.143-.031 1.371.498.232.537-.019 1.086-.61 1.35-2.368 1.06-3.817 2.855-4.215 5.424-.533 3.433 1.656 6.776 5 7.72 2.723.77 5.658-.166 7.308-2.33 1.586-2.08 1.4-5.099-.427-6.873a3.979 3.979 0 0 0-1.823-1.013c.198.716.389 1.388.57 2.062z"/>
+    </g>
+  </g>
+  
+  <!-- Reflet subtil pour l'effet glossy -->
+  <defs>
+    <linearGradient id="glossy" x1="0%" y1="0%" x2="0%" y2="50%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.3);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect x="10" y="10" width="180" height="90" rx="40" ry="40" fill="url(#glossy)"/>
+</svg></div>
+        <div class="logo-text">
+          <strong>Muzikly</strong>
+          <small>ConnexionBanger</small>
+        </div>
+      </div>
+      <nav class="nav-main">
+        <button class="nav-btn" data-page="home"><i class="fas fa-compass"></i> Découvrir</button>
+        <button class="nav-btn" data-page="playlists"><i class="fas fa-headphones"></i> Playlists</button>
+        <button class="nav-btn" data-page="liked"><i class="fas fa-heart"></i> Sons likés</button>
+        <button class="nav-btn" data-page="search"><i class="fas fa-search"></i> Recherche</button>
+        <button class="nav-btn" data-page="upcoming"><i class="fas fa-bolt"></i> Sorties</button>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+      <header class="topbar">
+        <div class="search-inline">
+          <i class="fas fa-search"></i>
+          <input id="headerSearch" placeholder="Rechercher un son, artiste..." />
+        </div>
+        <div class="top-actions">
+          <a href="https://github.com/CX-Banger" target="_blank" title="Github"><i class="fab fa-github"></i></a>
+        </div>
+      </header>
+
+      <section class="pages">
+        <!-- Home -->
+        <section id="page-home" class="page active">
+          <div class="hero">
+            <div class="hero-art" id="heroArt" style="cursor: pointer;"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="background: transparent;">
+  <!-- Disque principal blanc -->
+  <circle cx="200" cy="200" r="190" fill="#ffffff"/>
+
+  <!-- Label central vert -->
+  <circle cx="200" cy="200" r="60" fill="#b4e67e"/>
+
+  <!-- Trou central blanc -->
+  <circle cx="200" cy="200" r="8" fill="#ffffff"/>
+</svg></div>
+            <div class="hero-meta">
+              <strong>À la une</strong>
+              <h2 id="featuredTitle">Obsédé</h2>
+              <div class="chips">
+                <span class="chip">Rap - Gospel</span>
+                <span class="chip">2025</span>
+              </div>
+            </div>
+            <div class="hero-platforms">
+              <div class="hero-platforms-label">Disponible sur</div>
+              <div class="hero-platforms-icons">
+                <a href="https://open.spotify.com" target="_blank" rel="noopener" title="Spotify" class="platform-icon">
+                  <i class="fab fa-spotify"></i>
+                </a>
+                <a href="https://music.apple.com" target="_blank" rel="noopener" title="Apple Music" class="platform-icon">
+                  <i class="fab fa-apple"></i>
+                </a>
+                <a href="https://www.deezer.com" target="_blank" rel="noopener" title="Deezer" class="platform-icon">
+                  <i class="fab fa-deezer"></i>
+                </a>
+                <a href="https://music.youtube.com" target="_blank" rel="noopener" title="YouTube Music" class="platform-icon">
+                  <i class="fab fa-youtube"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+</br> <!-- saut de ligne entre la une et les artistes -->
+          <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 14px;">Artistes</h3>
+          <div id="artistsGrid" class="grid artists-grid"></div>
+
+          <div class="featured-section">
+            <div class="featured-header">
+              <h3>Sons à la une</h3>
+              <a href="#" class="discography-link">Voir plus</a>  
+
+              
+              <!-- Fonctionnalité du Bouton "Voir plus" (Ne fonctionne pas, à travailler pour la prochaine MàJ):
+              
+              - Ajout d'un bouton fonctionnel qui bascule entre scroll horizontal et grille complète
+              - Par défaut : défilement horizontal fluide
+              - Après clic sur "Voir plus" : affichage en grille complète
+              - Le bouton change en "Voir moins" pour revenir au scroll
+              <a href="#" id="voirPlusBtn" class="discography-link">Voir plus</a> -->
+
+
+              
+            </div>
+            <div id="featured" class="featured-grid featured-scroll"></div>
+          </div>
+        </section>
+
+        <!-- Playlists -->
+        <section id="page-playlists" class="page">
+          <div class="page-head">
+            <h2>🎧 Tes playlists</h2>
+            <div>
+              <input id="newPlaylistName" placeholder="Nouvelle playlist..." />
+              <button id="createPlaylistBtn">Créer</button>
+            </div>
+          </div>
+          <div id="playlistList" class="playlists-list"></div>
+          <div id="playlistTracks" class="playlist-tracks"></div>
+        </section>
+
+        <!-- Liked -->
+        <section id="page-liked" class="page">
+          <h2>♡ Sons likés</h2>
+          <div id="likedList" class="grid"></div>
+        </section>
+
+        <!-- Search -->
+        <section id="page-search" class="page">
+          <h2>🔍 Recherche</h2>
+          <input id="searchInput" placeholder="Rechercher un son (min 2 lettres)..." />
+          <div id="searchResults" class="grid search-results"></div>
+        </section>
+
+        <!-- Upcoming -->
+        <section id="page-upcoming" class="page">
+          <h2>🔥 Sorties & À la une</h2>
+          <div id="upcoming" class="grid"></div>
+        </section>
+
+        <!-- Artist Page -->
+        <section id="page-artist" class="page">
+          <div class="artist-page-header">
+            <div class="artist-page-banner">
+              <div class="artist-page-cover">
+                <img id="artistPageImage" src="" alt="Artist">
+              </div>
+              <div class="artist-page-info">
+                <span class="artist-page-label">Artiste</span>
+                <h1 id="artistPageName" class="artist-page-title"></h1>
+                <div id="artistPageBio" class="artist-page-bio"></div>
+              </div>
+            </div>
+            <div class="artist-page-actions">
+              <button id="artistPlayBtn" class="artist-play-btn">
+                <i class="fas fa-play"></i>
+              </button>
+              <button class="artist-action-btn">
+                <i class="fas fa-ellipsis-h"></i>
+              </button>
+            </div>
+          </div>
+          <div class="artist-page-content">
+            <div class="artist-tracks-section">
+              <div class="tracks-table-header">
+                <div class="track-col-number">#</div>
+                <div class="track-col-title">Titre</div>
+                <div class="track-col-album">Album</div>
+                <div class="track-col-duration"><i class="far fa-clock"></i></div>
+              </div>
+              <div id="artistTracksList" class="tracks-table-body"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <!-- Bottom nav (mobile) -->
+    <nav class="bottom-nav mobile-only" id="bottomNav">
+      <button class="bt" data-page="home"><i class="fas fa-home"></i><small>Accueil</small></button>
+      <button class="bt" data-page="playlists"><i class="fas fa-list"></i><small>Playlists</small></button>
+      <button class="bt" data-page="search"><i class="fas fa-search"></i><small>Recherche</small></button>
+      <button class="bt" data-page="upcoming"><i class="fas fa-bolt"></i><small>Sorties</small></button>
+    </nav>
+
+    <!-- Mini Player (collapsed state) -->
+    <div class="mini-player" id="miniPlayer">
+      <div class="mini-player-content" id="miniPlayerContent">
+        <img id="miniPlayerThumb" class="mini-player-thumb" src="" alt="cover" />
+        <div class="mini-player-info">
+          <div id="miniPlayerTitle" class="mini-player-title">—</div>
+          <div id="miniPlayerArtist" class="mini-player-artist">—</div>
+        </div>
+        <button id="miniPlayPause" class="mini-play-btn"><i class="fas fa-play"></i></button>
+      </div>
+    </div>
+
+    <!-- Full Player (expanded state) -->
+    <div class="full-player" id="fullPlayer">
+      <div class="full-player-scrollable" id="fullPlayerScrollable">
+        <div class="full-player-header">
+          <button id="closeFullPlayer" class="close-player-btn">
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <span class="player-header-title" id="headerTitleSticky">En lecture</span>
+          <button id="playerMenuBtn" class="player-menu-btn">
+            <i class="fas fa-ellipsis-h"></i>
+          </button>
+        </div>
+
+        <div class="full-player-cover-wrapper" id="fullPlayerCoverWrapper">
+          <img id="fullPlayerCover" class="full-player-cover" src="" alt="cover" />
+
+          <div class="full-player-info-overlay" id="fullPlayerInfoFixed">
+            <div class="full-player-meta">
+              <h2 id="fullPlayerTitle" class="full-player-song-title">—</h2>
+              <p id="fullPlayerArtist" class="full-player-artist-name">—</p>
+            </div>
+
+            <div class="full-player-controls">
+              <div class="progress-section">
+                <input id="fullProgress" type="range" min="0" max="100" value="0" class="full-progress-bar" />
+                <div class="progress-time">
+                  <span id="fullCurrentTime">0:00</span>
+                  <span id="fullDurationTime">0:00</span>
+                </div>
+              </div>
+
+              <div class="main-controls">
+                <button id="fullShuffleBtn" class="control-btn shuffle-btn">
+                  <i class="fas fa-random"></i>
+                </button>
+                <button id="fullPrevBtn" class="control-btn">
+                  <i class="fas fa-step-backward"></i>
+                </button>
+                <button id="fullPlayPauseBtn" class="control-btn play-pause-main">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button id="fullNextBtn" class="control-btn">
+                  <i class="fas fa-step-forward"></i>
+                </button>
+                <button id="fullRepeatBtn" class="control-btn repeat-btn">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lyrics-preview" id="lyricsPreview">
+          <span class="lyrics-preview-text">Paroles</span>
+          <i class="fas fa-chevron-up"></i>
+        </div>
+
+        <div class="lyrics-section" id="lyricsSection">
+          <div class="lyrics-content" id="lyricsContent">
+            <p class="lyrics-placeholder">Les paroles ne sont pas encore disponibles pour ce titre.</p>
+          </div>
+        </div>
+      </div>
+      <audio id="audio"></audio>
+    </div>
+
+    <!-- Player Menu Panel -->
+    <div class="player-menu-panel" id="playerMenuPanel">
+      <div class="menu-panel-content">
+        <button class="menu-panel-close" id="menuPanelClose">
+          <i class="fas fa-times"></i>
+        </button>
+        <h3 class="menu-panel-title">Options</h3>
+        <div class="menu-panel-actions">
+          <button id="menuLikeBtn" class="menu-action-btn">
+            <i class="far fa-heart"></i>
+            <span>Ajouter aux favoris</span>
+          </button>
+          <button id="menuAddToPlaylistBtn" class="menu-action-btn">
+            <i class="fas fa-plus"></i>
+            <span>Ajouter à une playlist</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS -->
+  <script src="src/script.js"></script>
+  <script src="src/player.js"></script>
+</body>
+</html>
