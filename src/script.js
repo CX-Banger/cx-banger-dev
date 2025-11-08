@@ -570,10 +570,10 @@ const heroArt = document.getElementById('heroArt');
 if (heroArt) {
   heroArt.addEventListener('click', () => {
     const obsedeSong = {
-      title: 'The King',
-      artist: 'Synaï',
-      src: 'https://hrzmagjjobctkfxayokt.supabase.co/storage/v1/object/public/sons/artiste2/son12.mp3',
-      thumb: `${GITHUB_BASE_URL}/media/artiste2/cover12.jpg`
+      title: 'Sé ou épi mwen',
+      artist: 'Eilynn',
+      src: 'https://hrzmagjjobctkfxayokt.supabase.co/storage/v1/object/public/sons/artiste5/son11.mp3',
+      thumb: `${GITHUB_BASE_URL}/media/artiste5/cover11.jpg`
     };
     playlist = [obsedeSong];
     currentIndex = 0;
