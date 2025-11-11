@@ -137,47 +137,49 @@ function renderArtists(){
 function renderFeatured(){
   featuredDiv.innerHTML='';
 
-    const featuredAlbums = [
-    { title: "Zone à danger", artist: "Raph", year: "Raph", cover: `${GITHUB_BASE_URL}/media/artiste9/cover1.jpg`, artistIndex: 8 },
-    { title: "Sé ou épi mwen", artist: "Eilynn", year: "Eilynn", cover: `${GITHUB_BASE_URL}/media/artiste5/cover11.jpg`, artistIndex: 4 },
-    { title: "Muy Bonito ft Eilynn", artist: "Synaï", year: "Synaï", cover: `${GITHUB_BASE_URL}/media/artiste2/cover14.jpg`, artistIndex: 1 },
-    { title: "The King ft Synaï", artist: "Elihem", year: "Elihem", cover: `${GITHUB_BASE_URL}/media/artiste3/cover6.jpg`, artistIndex: 2 },
-    { title: "Je t aime ft Synaï", artist: "Sara", year: "Sara", cover: `${GITHUB_BASE_URL}/media/artiste4/cover5.jpg`, artistIndex: 3 },
-    { title: "Sans Effet", artist: "NAN", year: "NAN", cover: `${GITHUB_BASE_URL}/media/artiste1/cover21.jpg`, artistIndex: 0 },
-    { title: "Ma Carrière", artist: "Melohim", year: "Melohim", cover: `${GITHUB_BASE_URL}/media/artiste6/cover1.jpg`, artistIndex: 5 },
-    { title: "Tiim 1", artist: "Tiim", year: "Test", cover: `${GITHUB_BASE_URL}/media/artiste7/cover1.jpg`, artistIndex: 6 }
+    function renderFeatured() {
+  featuredDiv.innerHTML = '';
+
+  const featuredAlbums = [
+    { title: "Zone à danger", artist: "Raph", cover: `${GITHUB_BASE_URL}/media/artiste9/cover1.jpg`, artistIndex: 8, trackIndex: 0 },
+    { title: "Sé ou épi mwen", artist: "Eilynn", cover: `${GITHUB_BASE_URL}/media/artiste5/cover11.jpg`, artistIndex: 4, trackIndex: 10 },
+    { title: "Muy Bonito ft Eilynn", artist: "Synaï", cover: `${GITHUB_BASE_URL}/media/artiste2/cover14.jpg`, artistIndex: 1, trackIndex: 13 },
+    { title: "The King ft Synaï", artist: "Elihem", cover: `${GITHUB_BASE_URL}/media/artiste3/cover6.jpg`, artistIndex: 2, trackIndex: 5 },
+    { title: "Je t aime ft Synaï", artist: "Sara", cover: `${GITHUB_BASE_URL}/media/artiste4/cover5.jpg`, artistIndex: 3, trackIndex: 4 },
+    { title: "Sans Effet", artist: "NAN", cover: `${GITHUB_BASE_URL}/media/artiste1/cover21.jpg`, artistIndex: 0, trackIndex: 20 },
+    { title: "Ma Carrière", artist: "Melohim", cover: `${GITHUB_BASE_URL}/media/artiste6/cover1.jpg`, artistIndex: 5, trackIndex: 0 },
+    { title: "Tiim 1", artist: "Tiim", cover: `${GITHUB_BASE_URL}/media/artiste7/cover1.jpg`, artistIndex: 6, trackIndex: 0 }
   ];
 
-  featuredAlbums.forEach((album, idx) => {
+  featuredAlbums.forEach(album => {
     const card = document.createElement("div");
     card.className = "featured-album";
     card.innerHTML = `
       <img src="${album.cover}" class="featured-album-cover" alt="${album.title}">
       <div class="featured-album-title">${album.title}</div>
-      <div class="featured-album-year">${album.year}</div>
+      <div class="featured-album-year">${album.artist}</div>
     `;
 
     card.addEventListener("click", () => {
       const artist = artists[album.artistIndex];
-      if (artist && artist.tracks) {
-        playlist = artist.tracks.map(x => ({
-          src: x.src,
-          title: x.title,
+      if (artist && artist.tracks && artist.tracks[album.trackIndex]) {
+        const track = artist.tracks[album.trackIndex];
+        playlist = [{
+          src: track.src,
+          title: track.title,
           artist: artist.name,
-          thumb: x.cover || artist.photo
-        }));
+          thumb: track.cover || artist.photo
+        }];
         currentIndex = 0;
         loadAndPlay(currentIndex);
-        if (typeof openFullPlayer === 'function') {
-          openFullPlayer();
-        }
+      } else {
+        console.warn("Track not found for:", album);
       }
     });
 
     featuredDiv.appendChild(card);
   });
 }
-
 
 
 
