@@ -137,15 +137,15 @@ function renderArtists(){
 function renderFeatured(){
   featuredDiv.innerHTML='';
 
-  const featuredAlbums = [
-    { title: "Olala", artist: "NAN", year: "NAN", cover: `${GITHUB_BASE_URL}/media/artiste1/cover1.jpg`, artistIndex: 0 },
-    { title: "YHWH", artist: "Synaï", year: "Synaï", cover: `${GITHUB_BASE_URL}/media/artiste2/cover1.jpg`, artistIndex: 1 },
-    { title: "In God", artist: "Elihem", year: "Elihem", cover: `${GITHUB_BASE_URL}/media/artiste3/cover1.jpg`, artistIndex: 2 },
-    { title: "Louange à Mon Dieu", artist: "Sara", year: "Sara", cover: `${GITHUB_BASE_URL}/media/artiste4/cover1.jpg`, artistIndex: 3 },
-    { title: "Cendrillon", artist: "Eilynn", year: "Eilynn", cover: `${GITHUB_BASE_URL}/media/artiste5/cover1.jpg`, artistIndex: 4 },
+    const featuredAlbums = [
+    { title: "Zone à danger", artist: "Raph", year: "Raph", cover: `${GITHUB_BASE_URL}/media/artiste9/cover1.jpg`, artistIndex: 8 },
+    { title: "Sé ou épi mwen", artist: "Eilynn", year: "Eilynn", cover: `${GITHUB_BASE_URL}/media/artiste5/cover11.jpg`, artistIndex: 4 },
+    { title: "Muy Bonito ft Eilynn", artist: "Synaï", year: "Synaï", cover: `${GITHUB_BASE_URL}/media/artiste2/cover14.jpg`, artistIndex: 1 },
+    { title: "The King ft Synaï", artist: "Elihem", year: "Elihem", cover: `${GITHUB_BASE_URL}/media/artiste3/cover6.jpg`, artistIndex: 2 },
+    { title: "Je t aime ft Synaï", artist: "Sara", year: "Sara", cover: `${GITHUB_BASE_URL}/media/artiste4/cover5.jpg`, artistIndex: 3 },
+    { title: "Sans Effet", artist: "NAN", year: "NAN", cover: `${GITHUB_BASE_URL}/media/artiste1/cover21.jpg`, artistIndex: 0 },
     { title: "Ma Carrière", artist: "Melohim", year: "Melohim", cover: `${GITHUB_BASE_URL}/media/artiste6/cover1.jpg`, artistIndex: 5 },
-    { title: "Tiim 1", artist: "Tiim", year: "Tiim", cover: `${GITHUB_BASE_URL}/media/artiste7/cover1.jpg`, artistIndex: 6 },
-    { title: "Math 1", artist: "Math", year: "Math", cover: `${GITHUB_BASE_URL}/media/artiste8/cover1.jpg`, artistIndex: 7 }
+    { title: "Tiim 1", artist: "Tiim", year: "Test", cover: `${GITHUB_BASE_URL}/media/artiste7/cover1.jpg`, artistIndex: 6 }
   ];
 
   featuredAlbums.forEach((album, idx) => {
