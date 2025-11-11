@@ -136,10 +136,7 @@ function renderArtists(){
 
 function renderFeatured(){
   featuredDiv.innerHTML='';
-
-    function renderFeatured() {
-  featuredDiv.innerHTML = '';
-
+  
   const featuredAlbums = [
     { title: "Zone à danger", artist: "Raph", cover: `${GITHUB_BASE_URL}/media/artiste9/cover1.jpg`, artistIndex: 8, trackIndex: 0 },
     { title: "Sé ou épi mwen", artist: "Eilynn", cover: `${GITHUB_BASE_URL}/media/artiste5/cover11.jpg`, artistIndex: 4, trackIndex: 10 },
