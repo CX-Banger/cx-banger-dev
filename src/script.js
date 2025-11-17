@@ -11,7 +11,21 @@ const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/CX-Banger/cx-final-mu
 const SUPABASE_STORAGE_URL = 'https://hrzmagjjobctkfxayokt.supabase.co/storage/v1/object/public/sons/';
 
 // URL de base pour les paroles hébergées sur GitHub
-const LYRICS_BASE_URL = 'https://raw.githubusercontent.com/CX-Banger/cx-muzik/main/lyrics';
+const LYRICS_BASE_URL = 'https://raw.githubusercontent.com/CX-Banger/cx-muzik/main/lyr';
+
+/* === Artistes avec couleurs personnalisées === */
+const artistsConfig = [
+  { name: 'NAN', bgColor: '#2a1a1a', bgColorHover: '#4a2a2a' },
+  { name: 'Synaï', bgColor: '#1a2a3a', bgColorHover: '#2a4a6a' },
+  { name: 'Elihem', bgColor: '#1a3a2a', bgColorHover: '#2a6a4a' },
+  { name: 'Sara', bgColor: '#3a2a1a', bgColorHover: '#6a4a2a' },
+  { name: 'Eilynn', bgColor: '#2a1a3a', bgColorHover: '#4a2a6a' },
+  { name: 'Melohim', bgColor: '#1a3a3a', bgColorHover: '#2a6a6a' },
+  { name: 'Tiim', bgColor: '#3a3a1a', bgColorHover: '#6a6a2a' },
+  { name: 'Math', bgColor: '#2a3a1a', bgColorHover: '#4a6a2a' },
+  { name: 'Raph', bgColor: '#3a1a1a', bgColorHover: '#6a2a2a' },
+  { name: 'Demo', bgColor: '#1a1a3a', bgColorHover: '#2a2a6a' }
+];
 
 /* === Données artistes (basées sur ton premier code) === */
 const artistNames = ['NAN', 'Synaï', 'Elihem', 'Sara', 'Eilynn', 'Melohim','Tiim', 'Math', 'Raph'];
@@ -24,7 +38,8 @@ const trackTitles = [
   ['Ma Carrière', 'Porter Du Fruit', 'Mourir à moi même', 'Mon Histoire', '10.10.2025'],
   ['Tiim 1', 'Tiim 2'],
   ['Math 1', 'Math 2', 'Math 3', 'Math 4', 'Math 5'],
-  ['Zone à danger', 'Raph2']
+  ['Zone à danger', 'Raph2'],
+  ['A la Fontaine']
 ];
 
 const artists = artistNames.map((name,i)=>({
@@ -36,7 +51,7 @@ const artists = artistNames.map((name,i)=>({
     id:`son${j+1}`,
     title,
     src:`${SUPABASE_STORAGE_URL}/artiste${i+1}/son${j+1}.mp3`,  // audio depuis Supabase
-    cover:`${GITHUB_BASE_URL}/media/artiste${i+1}/cover${j+1}.jpg` // cover depuis GitHub
+    cover:`${GITHUB_BASE_URL}/op/cv/artiste${i+1}/cover${j+1}.jpg` // cover depuis GitHub
   }))
 }));
 
