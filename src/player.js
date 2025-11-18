@@ -311,20 +311,121 @@ menuAddToPlaylistBtn.addEventListener('click', () => {
   const t = playlist[currentIndex];
   if (!t) return;
 
-  const plName = prompt('Nom de la playlist :');
-  if (plName) {
-    if (!userPlaylists[plName]) userPlaylists[plName] = [];
-    userPlaylists[plName].push({
-      title: t.title,
-      artist: t.artist,
-      src: t.src,
-      thumb: t.thumb || ''
-    });
-    savePlaylists();
-    renderPlaylists();
-    alert(`Ajouté à "${plName}"`);
+  const existingPlaylists = Object.keys(userPlaylists).filter(pl => pl !== 'Sons Likés');
+
+  if (existingPlaylists.length === 0) {
+    alert('Aucune playlist disponible. Créez d\'abord une playlist dans l\'onglet Playlists.');
+    playerMenuPanel.classList.remove('active');
+    return;
   }
-  playerMenuPanel.classList.remove('active');
+
+  const playlistMenu = document.createElement('div');
+  playlistMenu.className = 'playlist-selection-menu';
+  playlistMenu.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #282828;
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 10000;
+    max-height: 400px;
+    overflow-y: auto;
+    min-width: 300px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  `;
+
+  const title = document.createElement('h3');
+  title.textContent = 'Choisir une playlist';
+  title.style.cssText = 'margin: 0 0 15px 0; color: white; font-size: 18px;';
+  playlistMenu.appendChild(title);
+
+  existingPlaylists.forEach(plName => {
+    const btn = document.createElement('button');
+    btn.textContent = plName;
+    btn.style.cssText = `
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: #404040;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+      transition: background 0.2s;
+    `;
+    btn.onmouseover = () => btn.style.background = '#1DB954';
+    btn.onmouseout = () => btn.style.background = '#404040';
+    btn.onclick = () => {
+      const alreadyExists = userPlaylists[plName].some(
+        song => song.title === t.title && song.artist === t.artist
+      );
+
+      if (alreadyExists) {
+        alert(`Ce titre est déjà dans "${plName}"`);
+      } else {
+        userPlaylists[plName].push({
+          title: t.title,
+          artist: t.artist,
+          src: t.src,
+          thumb: t.thumb || '',
+          duration: t.duration || '0:00'
+        });
+        savePlaylists();
+        renderPlaylists();
+        alert(`Ajouté à "${plName}"`);
+      }
+
+      document.body.removeChild(playlistMenu);
+      document.body.removeChild(overlay);
+      playerMenuPanel.classList.remove('active');
+    };
+    playlistMenu.appendChild(btn);
+  });
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = 'Annuler';
+  cancelBtn.style.cssText = `
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: transparent;
+    color: white;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  `;
+  cancelBtn.onclick = () => {
+    document.body.removeChild(playlistMenu);
+    document.body.removeChild(overlay);
+    playerMenuPanel.classList.remove('active');
+  };
+  playlistMenu.appendChild(cancelBtn);
+
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+  `;
+  overlay.onclick = () => {
+    document.body.removeChild(playlistMenu);
+    document.body.removeChild(overlay);
+    playerMenuPanel.classList.remove('active');
+  };
+
+  document.body.appendChild(overlay);
+  document.body.appendChild(playlistMenu);
 });
 
 audio.addEventListener('timeupdate', () => {
@@ -371,6 +472,34 @@ audio.addEventListener('ended', () => {
     currentIndex++;
     loadAndPlay(currentIndex);
   } else {
+    // Fin de la playlist de l'artiste actuel
+    // Passer au premier morceau de l'artiste suivant
+    if (typeof currentArtistData !== 'undefined' && currentArtistData && typeof artists !== 'undefined' && artists) {
+      const currentArtistIndex = artists.findIndex(a => a.name === currentArtistData.name);
+      if (currentArtistIndex !== -1 && currentArtistIndex < artists.length - 1) {
+        // Il y a un artiste suivant
+        const nextArtist = artists[currentArtistIndex + 1];
+        if (nextArtist && nextArtist.tracks && nextArtist.tracks.length > 0) {
+          // Créer une nouvelle playlist avec tous les morceaux du prochain artiste
+          playlist = nextArtist.tracks.map(t => ({
+            src: t.src,
+            title: t.title,
+            artist: nextArtist.name,
+            thumb: t.cover || nextArtist.photo
+          }));
+          currentIndex = 0;
+          currentArtistData = nextArtist;
+          loadAndPlay(currentIndex);
+
+          // Mettre à jour la page artiste si elle est active
+          if (typeof showPage === 'function' && typeof openArtist === 'function') {
+            openArtist(nextArtist);
+          }
+          return;
+        }
+      }
+    }
+    // Sinon, arrêter la lecture
     isPlaying = false;
     updatePlayPauseButtons();
   }
