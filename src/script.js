@@ -272,6 +272,10 @@ function renderPlaylistTracks(plName){
       ? `<img src="${t.thumb}" class="track-cover-small" alt="${t.title}">`
       : `<div class="track-cover-small" style="background:linear-gradient(135deg,#1DB954,#1ed760);display:flex;align-items:center;justify-content:center;color:white;border-radius:4px;">♪</div>`;
 
+    const durationSpan = document.createElement('span');
+    durationSpan.textContent = t.duration || '0:00';
+    durationSpan.className = 'track-duration-text';
+
     row.innerHTML = `
       <div class="track-col-number">
         <span class="track-number-text">${idx + 1}</span>
@@ -291,9 +295,19 @@ function renderPlaylistTracks(plName){
             <i class="fas fa-trash"></i>
           </button>
         </div>
-        <span class="track-duration-text">${t.duration || '0:00'}</span>
       </div>
     `;
+
+    row.querySelector('.track-col-duration').appendChild(durationSpan);
+
+    if (t.src && !t.duration) {
+      loadTrackDuration(resolveSrc(t.src), (duration) => {
+        const formattedDuration = formatTime(duration);
+        durationSpan.textContent = formattedDuration;
+        t.duration = formattedDuration;
+        savePlaylists();
+      });
+    }
 
     row.addEventListener('click', (e)=>{
       if(e.target.closest('.track-action-btn')) return;
@@ -339,6 +353,10 @@ function renderLikedTracks(){
       ? `<img src="${t.thumb}" class="track-cover-small" alt="${t.title}">`
       : `<div class="track-cover-small" style="background:linear-gradient(135deg,#1DB954,#1ed760);display:flex;align-items:center;justify-content:center;color:white;border-radius:4px;">♪</div>`;
 
+    const durationSpan = document.createElement('span');
+    durationSpan.textContent = t.duration || '0:00';
+    durationSpan.className = 'track-duration-text';
+
     row.innerHTML = `
       <div class="track-col-number">
         <span class="track-number-text">${idx + 1}</span>
@@ -358,9 +376,19 @@ function renderLikedTracks(){
             <i class="fas fa-heart"></i>
           </button>
         </div>
-        <span class="track-duration-text">${t.duration || '0:00'}</span>
       </div>
     `;
+
+    row.querySelector('.track-col-duration').appendChild(durationSpan);
+
+    if (t.src && !t.duration) {
+      loadTrackDuration(resolveSrc(t.src), (duration) => {
+        const formattedDuration = formatTime(duration);
+        durationSpan.textContent = formattedDuration;
+        t.duration = formattedDuration;
+        savePlaylists();
+      });
+    }
 
     row.addEventListener('click', (e)=>{
       if(e.target.closest('.track-action-btn')) return;
@@ -653,9 +681,23 @@ function loadAndPlay(i){
   currentIndex = i;
   loadTrack(i);
 
+  updatePlayingState();
+
   try{
     audio.play().catch(() => {});
   }catch(e){}
+}
+
+function updatePlayingState() {
+  document.querySelectorAll('.track-row').forEach(r => r.classList.remove('playing'));
+
+  const allRows = document.querySelectorAll('.track-row');
+  allRows.forEach((row, idx) => {
+    const trackNumber = row.querySelector('.track-number-text');
+    if (trackNumber && parseInt(trackNumber.textContent) === currentIndex + 1) {
+      row.classList.add('playing');
+    }
+  });
 }
 
 /* save/restore last played */
