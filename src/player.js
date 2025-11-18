@@ -466,11 +466,13 @@ audio.addEventListener('ended', () => {
   if (isShuffle) {
     currentIndex = Math.floor(Math.random() * playlist.length);
     loadAndPlay(currentIndex);
+    updatePlayingState();
     return;
   }
   if (currentIndex < playlist.length - 1) {
     currentIndex++;
     loadAndPlay(currentIndex);
+    updatePlayingState();
   } else {
     // Fin de la playlist de l'artiste actuel
     // Passer au premier morceau de l'artiste suivant
