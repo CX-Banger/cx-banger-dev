@@ -37,7 +37,7 @@ const trackTitles = [
   ['Montres moi', 'Intro'],
   ['Math 1', 'Math 2', 'Math 3', 'Math 4', 'Math 5'],
   ['Zone à danger', 'Raph2'],
-  ['A la Fontaine']
+  ['A la Fontaine', 'Combat dans la Lumière']
 ];
 
 const artists = artistsConfig.map((config, i) => ({
@@ -77,7 +77,7 @@ const featuredDiv = document.getElementById('featured');
 const upcomingDiv = document.getElementById('upcoming');
 const playlistListDiv = document.getElementById('playlistList');
 const playlistTracksDiv = document.getElementById('playlistTracks');
-const likedListDiv = document.getElementById('likedList');
+const likedTracksDiv = document.getElementById('likedTracks');
 const searchInput = document.getElementById('searchInput');
 const searchResultsDiv = document.getElementById('searchResults');
 const headerSearch = document.getElementById('headerSearch');
@@ -139,10 +139,18 @@ function renderArtists(){
   artists.forEach(a=>{
     const card = document.createElement('div');
     card.className = 'artist-card';
+    card.style.backgroundColor = a.bgColor;
     card.innerHTML = `
     <img src="${a.photo}" class="avatar" alt="${a.name}">
     <div class="artist-info"><h3>${a.name}</h3><p>${a.bio}</p></div>
     `;
+
+    card.addEventListener('mouseenter', ()=> {
+      card.style.backgroundColor = a.bgColorHover;
+    });
+    card.addEventListener('mouseleave', ()=> {
+      card.style.backgroundColor = a.bgColor;
+    });
 
     card.addEventListener('click', ()=> openArtist(a));
     artistsGrid.appendChild(card);
@@ -209,91 +217,174 @@ function renderUpcoming(){
 /* ===== Playlists (user) ===== */
 function savePlaylists(){ localStorage.setItem('playlists', JSON.stringify(userPlaylists)); }
 function renderPlaylists(){
-  // ensure liked songs are synchronized
-  userPlaylists['Sons Likés'] = userPlaylists['Sons Likés'] || likedSongs;
   const list = playlistListDiv;
   list.innerHTML = '';
+
+  const likedExists = userPlaylists['Sons Likés'] && userPlaylists['Sons Likés'].length > 0;
+  if(likedExists){
+    renderPlaylistTracks('Sons Likés');
+  }
+
   Object.keys(userPlaylists).forEach(pl=>{
+    if(pl === 'Sons Likés') return;
     const card = document.createElement('div');
     card.className = 'playlist-card';
     card.innerHTML = `<div><strong>${pl}</strong> <small>(${userPlaylists[pl].length} titres)</small></div>
                       <div><button class="open">Ouvrir</button> <button class="del">🗑</button></div>`;
     card.querySelector('.open').addEventListener('click', ()=>{
       renderPlaylistTracks(pl);
-      // play first if exists
-      if(userPlaylists[pl].length>0){
-        playlist = userPlaylists[pl];
-        currentIndex = 0;
-        loadAndPlay(currentIndex);
-      }
     });
-    card.querySelector('.del').addEventListener('click', ()=>{
-      if(confirm(`Supprimer la playlist "${pl}" ?`)){
-        delete userPlaylists[pl];
-        savePlaylists();
-        renderPlaylists();
-        playlistTracksDiv.innerHTML = '';
-      }
-    });
+    const delBtn = card.querySelector('.del');
+    if(delBtn){
+      delBtn.addEventListener('click', ()=>{
+        if(confirm(`Supprimer la playlist "${pl}" ?`)){
+          delete userPlaylists[pl];
+          savePlaylists();
+          renderPlaylists();
+          playlistTracksDiv.innerHTML = '';
+        }
+      });
+    }
     list.appendChild(card);
   });
-  // liked list render
-  renderLiked();
+  renderLikedTracks();
 }
 
 function renderPlaylistTracks(plName){
   const container = playlistTracksDiv;
-  container.innerHTML = `<h3>${plName}</h3>`;
+  const headerHTML = plName === 'Sons Likés' ? '' : `<h3 style="margin-bottom: 20px;">${plName}</h3>`;
+  container.innerHTML = `${headerHTML}
+    <div class="tracks-table-header">
+      <div class="track-col-number">#</div>
+      <div class="track-col-title">Titre</div>
+      <div class="track-col-album">Artiste</div>
+      <div class="track-col-duration"><i class="far fa-clock"></i></div>
+    </div>`;
+
+  const tableBody = document.createElement('div');
+  tableBody.className = 'tracks-table-body';
+
   userPlaylists[plName].forEach((t, idx)=>{
     const row = document.createElement('div');
-    row.className = 'playlist-track';
-    const thumbHTML = t.thumb && (t.thumb.startsWith('http') || t.thumb.includes('.jpg') || t.thumb.includes('.png'))
-      ? `<img src="${t.thumb}" class="cover" alt="${t.title}">`
-      : `<div class="cover" style="background:linear-gradient(135deg,#1DB954,#1ed760);display:flex;align-items:center;justify-content:center;color:white">♪</div>`;
+    row.className = 'track-row';
 
-    row.innerHTML = `<div class="info">${thumbHTML}<div style="margin-left:10px"><strong>${t.title}</strong><small>${t.artist}</small></div></div>
-                     <div><button class="play-btn">▶</button> <button class="del-btn">🗑</button></div>`;
-    row.querySelector('.play-btn').addEventListener('click', ()=>{
+    const thumbHTML = t.thumb && (t.thumb.startsWith('http') || t.thumb.includes('.jpg') || t.thumb.includes('.png'))
+      ? `<img src="${t.thumb}" class="track-cover-small" alt="${t.title}">`
+      : `<div class="track-cover-small" style="background:linear-gradient(135deg,#1DB954,#1ed760);display:flex;align-items:center;justify-content:center;color:white;border-radius:4px;">♪</div>`;
+
+    row.innerHTML = `
+      <div class="track-col-number">
+        <span class="track-number-text">${idx + 1}</span>
+        <i class="fas fa-play track-play-icon"></i>
+      </div>
+      <div class="track-col-title">
+        ${thumbHTML}
+        <div class="track-title-info">
+          <div class="track-title-text">${t.title}</div>
+          <div class="track-artist-text">${t.artist}</div>
+        </div>
+      </div>
+      <div class="track-col-album">${t.artist}</div>
+      <div class="track-col-duration">
+        <div class="track-actions">
+          <button class="track-action-btn del-btn" title="Supprimer">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <span class="track-duration-text">${t.duration || '0:00'}</span>
+      </div>
+    `;
+
+    row.addEventListener('click', (e)=>{
+      if(e.target.closest('.track-action-btn')) return;
       playlist = userPlaylists[plName];
       currentIndex = idx;
       loadAndPlay(currentIndex);
+
+      document.querySelectorAll('.track-row').forEach(r => r.classList.remove('playing'));
+      row.classList.add('playing');
+
       if (typeof openFullPlayer === 'function') {
         openFullPlayer();
       }
     });
-    row.querySelector('.del-btn').addEventListener('click', ()=>{
+
+    row.querySelector('.del-btn').addEventListener('click', (e)=>{
+      e.stopPropagation();
       userPlaylists[plName].splice(idx,1);
       savePlaylists();
       renderPlaylists();
       renderPlaylistTracks(plName);
     });
-    container.appendChild(row);
+
+    tableBody.appendChild(row);
   });
+
+  container.appendChild(tableBody);
 }
 
-/* ===== Liked ==== */
-function renderLiked(){
-  likedListDiv.innerHTML = '';
+function renderLikedTracks(){
   const liked = userPlaylists['Sons Likés'] || [];
-  if(liked.length===0){ likedListDiv.innerHTML = '<p style="color:var(--muted)">Aucun son liké pour l’instant.</p>'; return; }
-  liked.forEach((t,idx)=>{
-    const el = document.createElement('div');
-    el.className = 'artist-card';
+  likedTracksDiv.innerHTML = '';
+  if(liked.length === 0){
+    likedTracksDiv.innerHTML = '<p style="color:var(--muted); padding: 20px;">Aucun son like pour l\'instant.</p>';
+    return;
+  }
 
-    const thumbElement = t.thumb && (t.thumb.startsWith('http') || t.thumb.includes('.jpg') || t.thumb.includes('.png'))
-      ? `<img src="${t.thumb}" class="avatar" alt="${t.title}">`
-      : `<div class="avatar">♡</div>`;
+  liked.forEach((t, idx)=>{
+    const row = document.createElement('div');
+    row.className = 'track-row';
 
-    el.innerHTML = `${thumbElement}<div class="artist-info"><h3>${t.title}</h3><p>${t.artist}</p></div>`;
-    el.addEventListener('click', ()=> {
+    const thumbHTML = t.thumb && (t.thumb.startsWith('http') || t.thumb.includes('.jpg') || t.thumb.includes('.png'))
+      ? `<img src="${t.thumb}" class="track-cover-small" alt="${t.title}">`
+      : `<div class="track-cover-small" style="background:linear-gradient(135deg,#1DB954,#1ed760);display:flex;align-items:center;justify-content:center;color:white;border-radius:4px;">♪</div>`;
+
+    row.innerHTML = `
+      <div class="track-col-number">
+        <span class="track-number-text">${idx + 1}</span>
+        <i class="fas fa-play track-play-icon"></i>
+      </div>
+      <div class="track-col-title">
+        ${thumbHTML}
+        <div class="track-title-info">
+          <div class="track-title-text">${t.title}</div>
+          <div class="track-artist-text">${t.artist}</div>
+        </div>
+      </div>
+      <div class="track-col-album">${t.artist}</div>
+      <div class="track-col-duration">
+        <div class="track-actions">
+          <button class="track-action-btn unlike-btn" title="Ne plus aimer">
+            <i class="fas fa-heart"></i>
+          </button>
+        </div>
+        <span class="track-duration-text">${t.duration || '0:00'}</span>
+      </div>
+    `;
+
+    row.addEventListener('click', (e)=>{
+      if(e.target.closest('.track-action-btn')) return;
       playlist = userPlaylists['Sons Likés'];
       currentIndex = idx;
       loadAndPlay(currentIndex);
+
+      document.querySelectorAll('.track-row').forEach(r => r.classList.remove('playing'));
+      row.classList.add('playing');
+
       if (typeof openFullPlayer === 'function') {
         openFullPlayer();
       }
     });
-    likedListDiv.appendChild(el);
+
+    row.querySelector('.unlike-btn').addEventListener('click', (e)=>{
+      e.stopPropagation();
+      userPlaylists['Sons Likés'].splice(idx,1);
+      likedSongs = userPlaylists['Sons Likés'];
+      savePlaylists();
+      renderLikedTracks();
+    });
+
+    likedTracksDiv.appendChild(row);
   });
 }
 
@@ -670,4 +761,3 @@ document.addEventListener('click', (e)=>{
     // handled by album item listeners already
   }
 });
-
