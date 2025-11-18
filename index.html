@@ -158,8 +158,14 @@
 
         <!-- Liked -->
         <section id="page-liked" class="page">
-          <h2>♡ Sons likés</h2>
-          <div id="likedList" class="grid"></div>
+          <h2 style="margin-bottom: 20px;">♡ Sons likés</h2>
+          <div class="tracks-table-header">
+            <div class="track-col-number">#</div>
+            <div class="track-col-title">Titre</div>
+            <div class="track-col-album">Artiste</div>
+            <div class="track-col-duration"><i class="far fa-clock"></i></div>
+          </div>
+          <div id="likedTracks" class="tracks-table-body"></div>
         </section>
 
         <!-- Search -->
@@ -325,5 +331,3 @@
   <script src="src/player.js"></script>
 </body>
 </html>
-
-
