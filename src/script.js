@@ -225,12 +225,31 @@ function renderPlaylists(){
     renderPlaylistTracks('Sons Likés');
   }
 
+  const colors = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5', 'color-6', 'color-7', 'color-8', 'color-9', 'color-10'];
+  let colorIndex = 0;
+
   Object.keys(userPlaylists).forEach(pl=>{
     if(pl === 'Sons Likés') return;
     const card = document.createElement('div');
     card.className = 'playlist-card';
-    card.innerHTML = `<div><strong>${pl}</strong> <small>(${userPlaylists[pl].length} titres)</small></div>
-                      <div><button class="open">Ouvrir</button> <button class="del">🗑</button></div>`;
+    const colorClass = colors[colorIndex % colors.length];
+    colorIndex++;
+    const firstLetter = pl.charAt(0).toUpperCase();
+
+    card.innerHTML = `
+      <div class="playlist-cover ${colorClass}">
+        ${firstLetter}
+      </div>
+      <div class="playlist-card-info">
+        <strong>${pl}</strong>
+        <small>${userPlaylists[pl].length} titres</small>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: auto;">
+        <button class="open">Ouvrir</button>
+        <button class="del">🗑</button>
+      </div>
+    `;
+
     card.querySelector('.open').addEventListener('click', ()=>{
       renderPlaylistTracks(pl);
     });
@@ -481,6 +500,74 @@ function openArtist(a){
     const audioSrc = Array.isArray(t.src) ? t.src[0] : t.src;
     loadTrackDuration(audioSrc, (duration) => {
       durationSpan.textContent = formatDuration(duration);
+    });
+
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isSwiping = false;
+    let swipeAdded = false;
+
+    tr.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchCurrentX = touchStartX;
+      isSwiping = true;
+      swipeAdded = false;
+      tr.style.transition = 'none';
+    }, { passive: true });
+
+    tr.addEventListener('touchmove', (e) => {
+      if (!isSwiping) return;
+      touchCurrentX = e.touches[0].clientX;
+      const deltaX = touchCurrentX - touchStartX;
+
+      if (deltaX > 0) {
+        tr.style.transform = `translateX(${deltaX}px)`;
+        tr.style.opacity = Math.max(0.5, 1 - (deltaX / 300));
+
+        if (deltaX > 100 && !swipeAdded) {
+          swipeAdded = true;
+          if (navigator.vibrate) {
+            navigator.vibrate(50);
+          }
+          tr.style.backgroundColor = 'rgba(29, 185, 84, 0.3)';
+        }
+      }
+    }, { passive: true });
+
+    tr.addEventListener('touchend', (e) => {
+      if (!isSwiping) return;
+      isSwiping = false;
+
+      const deltaX = touchCurrentX - touchStartX;
+
+      if (deltaX > 100 && swipeAdded) {
+        if(!userPlaylists['Sons Likés']) userPlaylists['Sons Likés'] = [];
+        userPlaylists['Sons Likés'].push({title:t.title,artist:a.name,src:Array.isArray(t.src)?t.src[0]:t.src,thumb:t.cover || a.photo});
+        savePlaylists(); renderPlaylists();
+
+        tr.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+        tr.style.transform = 'translateX(100%)';
+        tr.style.opacity = '0';
+
+        setTimeout(() => {
+          tr.style.transition = 'transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease';
+          tr.style.transform = 'translateX(0)';
+          tr.style.opacity = '1';
+          tr.style.backgroundColor = '';
+
+          const heartIcon = tr.querySelector('.like-btn i');
+          if (heartIcon) {
+            heartIcon.classList.remove('far');
+            heartIcon.classList.add('fas');
+            tr.querySelector('.like-btn').classList.add('liked');
+          }
+        }, 400);
+      } else {
+        tr.style.transition = 'transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease';
+        tr.style.transform = 'translateX(0)';
+        tr.style.opacity = '1';
+        tr.style.backgroundColor = '';
+      }
     });
 
     tr.addEventListener('click', (e)=>{
