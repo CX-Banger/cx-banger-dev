@@ -20,32 +20,6 @@ body {
   flex-direction: column;
   border-right: 1px solid #222;
 }
-
-@media (max-width: 900px) {
-  .app {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid #222;
-    padding: 12px;
-  }
-  .logo {
-    margin-bottom: 12px;
-  }
-  .nav-main {
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 8px;
-  }
-  .nav-btn {
-    padding: 8px 16px;
-    white-space: nowrap;
-    font-size: 14px;
-  }
-}
 .logo {
   display: flex; align-items: center; font-weight: bold;
   font-size: 18px; margin-bottom: 30px; gap: 10px;
@@ -78,21 +52,6 @@ body {
 .search-inline {
   display: flex; align-items: center; background: #1e1e1e;
   padding: 6px 12px; border-radius: 20px; gap: 8px; width: 50%;
-}
-
-@media (max-width: 900px) {
-  .topbar {
-    padding: 10px 12px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .search-inline {
-    width: 100%;
-    order: 2;
-  }
-  .top-actions {
-    gap: 10px;
-  }
 }
 .search-inline input {
   border: none; background: none; color: #fff; outline: none; flex: 1;
@@ -340,77 +299,23 @@ body {
   }
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-  .artist-card img.avatar {
-    height: 100px;
-  }
-  .artist-card .artist-info {
-    padding: 8px;
-    font-size: 13px;
-  }
-}
-
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  .artist-card img.avatar {
-    height: 90px;
-  }
-  .artist-card .artist-info {
-    padding: 6px;
-    font-size: 12px;
-  }
 }
-
-.artist-card {
-  background: #1e1e1e;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: transform .2s;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.artist-card:hover {
-  transform: translateY(-4px);
-}
-
-.artist-card img.avatar {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  display: block;
-}
-
-.artist-card .artist-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 12px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
-  z-index: 1;
-}
-
-.album-item, .track-card {
+.artist-card, .album-item, .track-card {
   background: #1e1e1e; border-radius: 10px; padding: 12px;
   transition: background .2s, transform .2s; cursor: pointer;
 }
-.album-item:hover, .track-card:hover {
+.artist-card:hover, .album-item:hover, .track-card:hover {
   background: #282828; transform: translateY(-4px);
 }
 .avatar {
   width: 64px;
   height: 64px;
-  border-radius: 8px;
+  border-radius: 50%;
   object-fit: cover;
 }
 
@@ -421,7 +326,7 @@ body {
   object-fit: cover;
 }
 
-.artist-info h3 { font-size: 18px; margin: 0; font-weight: 700; }
+.artist-info h3 { font-size: 14px; margin: 0; }
 .artist-info p { font-size: 12px; color: #aaa; }
 
 /* Album style */
@@ -1422,13 +1327,11 @@ body {
   }
 
   .page-head input {
-    width: 100%;
-    margin-bottom: 0;
+    display: none;
   }
 
   .page-head button {
-    width: 100%;
-    margin-top: 0;
+    display: none;
   }
 
   .playlists-list {
@@ -1711,6 +1614,118 @@ body {
   line-height: 1;
 }
 
+/* ==== TITRES DES SONS DANS LE MODAL ARTISTE ==== */
+#artistModal .track > div > div > div:first-child {
+  font-size: 13px !important; /* ↓ réduit la taille (par défaut c’est env. 16px) */
+  font-weight: 600;
+  line-height: 1.3;
+  color: #fff;
+}
+#artistModal .track > div > div > div:nth-child(2) {
+  font-size: 11px !important; /* sous-titre (nom artiste) */
+  color: #aaa !important;
+}
+
+/* ==== ALIGNEMENT DES BOUTONS DANS LE MODAL ARTISTE ==== */
+#artistModal .track {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  margin-bottom: 4px;
+  gap: 10px;
+}
+
+/* bloc gauche (cover + titre + artiste) */
+#artistModal .track > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 auto; /* occupe tout l’espace restant */
+  min-width: 0; /* pour éviter que les titres longs débordent */
+}
+
+/* texte titre + artiste */
+#artistModal .track > div:first-child > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+#artistModal .track > div:first-child > div > div:first-child {
+  font-size: 13px !important;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#artistModal .track > div:first-child > div > div:nth-child(2) {
+  font-size: 11px !important;
+  color: #aaa;
+}
+
+/* bloc boutons */
+#artistModal .track > div:last-child {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  width: 100px; /* largeur fixe pour tous les boutons */
+  justify-content: flex-end;
+}
+
+
+/* ==== BOUTONS PLAYLIST ("Ouvrir" & Corbeille) ==== */
+.playlist-card button {
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* bouton "Ouvrir" */
+.playlist-card .open {
+  background: linear-gradient(135deg, #1DB954, #1ed760);
+  color: #000;
+  box-shadow: 0 2px 6px rgba(29,185,84,0.3);
+}
+.playlist-card .open:hover {
+  background: linear-gradient(135deg, #1ed760, #34f58c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(29,185,84,0.4);
+}
+.playlist-card .open:active {
+  transform: scale(0.96);
+}
+
+/* bouton corbeille */
+.playlist-card .del {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ff5c5c;
+  font-size: 15px;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.playlist-card .del:hover {
+  background: rgba(255, 0, 0, 0.15);
+  transform: scale(1.1);
+}
+.playlist-card .del:active {
+  transform: scale(0.95);
+}
+
 /* ==== ARTIST PAGE ==== */
 #page-artist {
   background: #121212;
@@ -1965,6 +1980,11 @@ body {
   gap: 16px;
 }
 
+.track-duration-text {
+  color: #b3b3b3;
+  font-size: 14px;
+}
+
 .track-actions {
   display: none;
   gap: 8px;
@@ -1992,7 +2012,6 @@ body {
   color: #1DB954;
 }
 
-/* ==== ARTIST PAGE MOBILE RESPONSIVE ==== */
 @media (max-width: 900px) {
   .artist-page-banner {
     padding: 40px 20px 20px;
@@ -2126,52 +2145,3 @@ body {
   }
 }
 
-/* ==== BOUTONS PLAYLIST ("Ouvrir" & Corbeille) ==== */
-.playlist-card button {
-  border: none;
-  border-radius: 20px;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-/* bouton "Ouvrir" */
-.playlist-card .open {
-  background: linear-gradient(135deg, #1DB954, #1ed760);
-  color: #000;
-  box-shadow: 0 2px 6px rgba(29,185,84,0.3);
-}
-.playlist-card .open:hover {
-  background: linear-gradient(135deg, #1ed760, #34f58c);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(29,185,84,0.4);
-}
-.playlist-card .open:active {
-  transform: scale(0.96);
-}
-
-/* bouton corbeille */
-.playlist-card .del {
-  background: rgba(255, 255, 255, 0.05);
-  color: #ff5c5c;
-  font-size: 15px;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-.playlist-card .del:hover {
-  background: rgba(255, 0, 0, 0.15);
-  transform: scale(1.1);
-}
-.playlist-card .del:active {
-  transform: scale(0.95);
-}
-
-}
