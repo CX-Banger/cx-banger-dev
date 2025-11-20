@@ -121,26 +121,6 @@
 </br> <!-- saut de ligne entre la une et les artistes -->
           <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 14px;">Artistes</h3>
           <div id="artistsGrid" class="grid artists-grid"></div>
-
-          <div class="featured-section">
-            <div class="featured-header">
-              <h3>Sons à la une</h3>
-              <a href="#" class="discography-link">Voir plus</a>  
-
-              
-              <!-- Fonctionnalité du Bouton "Voir plus" (Ne fonctionne pas, à travailler pour la prochaine MàJ):
-              
-              - Ajout d'un bouton fonctionnel qui bascule entre scroll horizontal et grille complète
-              - Par défaut : défilement horizontal fluide
-              - Après clic sur "Voir plus" : affichage en grille complète
-              - Le bouton change en "Voir moins" pour revenir au scroll
-              <a href="#" id="voirPlusBtn" class="discography-link">Voir plus</a> -->
-
-
-              
-            </div>
-            <div id="featured" class="featured-grid featured-scroll"></div>
-          </div>
         </section>
 
         <!-- Playlists -->
@@ -229,12 +209,16 @@
     <!-- Mini Player (collapsed state) -->
     <div class="mini-player" id="miniPlayer">
       <div class="mini-player-content" id="miniPlayerContent">
+        <button id="miniPlayPause" class="mini-play-btn"><i class="fas fa-pause"></i></button>
         <img id="miniPlayerThumb" class="mini-player-thumb" src="" alt="cover" />
         <div class="mini-player-info">
           <div id="miniPlayerTitle" class="mini-player-title">—</div>
           <div id="miniPlayerArtist" class="mini-player-artist">—</div>
         </div>
-        <button id="miniPlayPause" class="mini-play-btn"><i class="fas fa-play"></i></button>
+        <div class="mini-player-actions">
+          <button id="miniLikeBtn" class="mini-like-btn"><i class="far fa-heart"></i></button>
+          <button id="miniNextBtn" class="mini-next-btn"><i class="fas fa-step-forward"></i></button>
+        </div>
       </div>
     </div>
 
