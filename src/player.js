@@ -7,6 +7,8 @@ const miniPlayerThumb = document.getElementById('miniPlayerThumb');
 const miniPlayerTitle = document.getElementById('miniPlayerTitle');
 const miniPlayerArtist = document.getElementById('miniPlayerArtist');
 const miniPlayPauseBtn = document.getElementById('miniPlayPause');
+const miniLikeBtn = document.getElementById('miniLikeBtn');
+const miniNextBtn = document.getElementById('miniNextBtn');
 
 const fullPlayerCover = document.getElementById('fullPlayerCover');
 const fullPlayerTitle = document.getElementById('fullPlayerTitle');
@@ -123,7 +125,13 @@ function updateFullPlayerUI() {
 function updatePlayPauseButtons() {
   const icon = isPlaying ? 'fa-pause' : 'fa-play';
 
-  miniPlayPauseBtn.innerHTML = `<i class="fas ${icon}"></i>`;
+  if (!isPlaying) {
+    miniPlayPauseBtn.classList.add('playing');
+    miniPlayPauseBtn.innerHTML = `<i class="fas ${icon}"></i>`;
+  } else {
+    miniPlayPauseBtn.classList.remove('playing');
+    miniPlayPauseBtn.innerHTML = '';
+  }
 
   const fullIcon = fullPlayPauseBtn.querySelector('i');
   if (fullIcon) {
@@ -183,7 +191,14 @@ function handlePrev() {
 }
 
 miniPlayerContent.addEventListener('click', (e) => {
-  if (e.target !== miniPlayPauseBtn && !miniPlayPauseBtn.contains(e.target)) {
+  if (
+    e.target !== miniPlayPauseBtn &&
+    !miniPlayPauseBtn.contains(e.target) &&
+    e.target !== miniLikeBtn &&
+    !miniLikeBtn.contains(e.target) &&
+    e.target !== miniNextBtn &&
+    !miniNextBtn.contains(e.target)
+  ) {
     openFullPlayer();
   }
 });
@@ -191,6 +206,47 @@ miniPlayerContent.addEventListener('click', (e) => {
 miniPlayPauseBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   handlePlayPause();
+});
+
+miniLikeBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const t = playlist[currentIndex];
+  if (!t) return;
+
+  if (!userPlaylists['Sons Likés']) userPlaylists['Sons Likés'] = [];
+
+  const alreadyLiked = userPlaylists['Sons Likés'].some(
+    song => song.title === t.title && song.artist === t.artist
+  );
+
+  if (alreadyLiked) {
+    miniLikeBtn.querySelector('i').className = 'fas fa-heart';
+    setTimeout(() => {
+      miniLikeBtn.querySelector('i').className = 'far fa-heart';
+    }, 300);
+    return;
+  }
+
+  userPlaylists['Sons Likés'].push({
+    title: t.title,
+    artist: t.artist,
+    src: t.src,
+    thumb: t.thumb || ''
+  });
+
+  savePlaylists();
+  renderPlaylists();
+
+  miniLikeBtn.querySelector('i').className = 'fas fa-heart';
+
+  setTimeout(() => {
+    miniLikeBtn.querySelector('i').className = 'far fa-heart';
+  }, 1500);
+});
+
+miniNextBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  handleNext();
 });
 
 closeFullPlayerBtn.addEventListener('click', closeFullPlayer);
