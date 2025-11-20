@@ -520,7 +520,7 @@ function openArtist(a){
       touchCurrentX = e.touches[0].clientX;
       const deltaX = touchCurrentX - touchStartX;
 
-      if (deltaX < 0) {
+      if (deltaX > 0) {
         tr.style.transform = `translateX(${deltaX}px)`;
         tr.style.opacity = Math.max(0.5, 1 - (deltaX / 300));
 
@@ -540,13 +540,13 @@ function openArtist(a){
 
       const deltaX = touchCurrentX - touchStartX;
 
-      if (Math.abs(deltaX) > 100 && deltaX < 0 && swipeAdded) {
+      if (deltaX > 100 && swipeAdded) {
         if(!userPlaylists['Sons Likés']) userPlaylists['Sons Likés'] = [];
         userPlaylists['Sons Likés'].push({title:t.title,artist:a.name,src:Array.isArray(t.src)?t.src[0]:t.src,thumb:t.cover || a.photo});
         savePlaylists(); renderPlaylists();
 
         tr.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-        tr.style.transform = 'translateX(-100%)';
+        tr.style.transform = 'translateX(100%)';
         tr.style.opacity = '0';
 
         setTimeout(() => {
