@@ -60,129 +60,9 @@ body {
   border: none; background: none; color: #fff; outline: none; flex: 1;
 }
 .search-inline i { color: #888; }
-.top-actions { display: flex; gap: 14px; align-items: center; }
+.top-actions { display: flex; gap: 14px; }
 .top-actions a, .top-actions button {
   background: none; border: none; color: #aaa; cursor: pointer; font-size: 18px;
-}
-
-.notification-btn {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s, color 0.2s;
-}
-
-.notification-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-.notification-badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background: #1DB954;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  min-width: 16px;
-  height: 16px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.email-preferences-card {
-  background: #1e1e1e;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-  border: 1px solid #282828;
-}
-
-.email-pref-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.email-pref-header > i {
-  font-size: 24px;
-  color: #1DB954;
-}
-
-.email-pref-info {
-  flex: 1;
-}
-
-.email-pref-info h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: #fff;
-}
-
-.email-pref-info p {
-  font-size: 13px;
-  color: #aaa;
-  line-height: 1.4;
-}
-
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 26px;
-  flex-shrink: 0;
-}
-
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #333;
-  transition: 0.3s;
-  border-radius: 26px;
-}
-
-.toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.3s;
-  border-radius: 50%;
-}
-
-.toggle-switch input:checked + .toggle-slider {
-  background-color: #1DB954;
-}
-
-.toggle-switch input:checked + .toggle-slider:before {
-  transform: translateX(24px);
-}
-
-.toggle-slider:hover {
-  opacity: 0.9;
 }
 
 .pages {
@@ -395,7 +275,7 @@ body {
 
 .featured-album-cover {
   width: 100%;
-  height: 140px;
+  height: 180px;
   object-fit: cover;
   display: block;
   border-radius: 0;
@@ -431,7 +311,7 @@ body {
   }
 
   .featured-album-cover {
-    height: 130px;
+    height: 155px;
   }
 }
 
@@ -1936,79 +1816,6 @@ body {
 }
 .playlist-card .del:active {
   transform: scale(0.95);
-}
-
-/* ==== NOTIFICATIONS ==== */
-.notifications-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 800px;
-}
-
-.notification-item {
-  background: #1a1a1a;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  transition: background 0.2s;
-  cursor: pointer;
-}
-
-.notification-item:hover {
-  background: #282828;
-}
-
-.notification-item.unread {
-  background: rgba(29, 185, 84, 0.1);
-  border-left: 3px solid #1DB954;
-}
-
-.notification-cover {
-  width: 60px;
-  height: 60px;
-  border-radius: 4px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.notification-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.notification-message {
-  font-size: 14px;
-  color: #fff;
-  margin-bottom: 4px;
-  font-weight: 500;
-}
-
-.notification-time {
-  font-size: 12px;
-  color: #b3b3b3;
-}
-
-.notification-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #1DB954;
-  flex-shrink: 0;
-}
-
-.notifications-empty {
-  text-align: center;
-  padding: 60px 20px;
-  color: #b3b3b3;
-}
-
-.notifications-empty i {
-  font-size: 48px;
-  margin-bottom: 16px;
-  opacity: 0.5;
 }
 
 /* ==== ARTIST PAGE ==== */
